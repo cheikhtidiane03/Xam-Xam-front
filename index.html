@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Xaam-Xaam+ — Accompagnement scolaire par IA guidée, méthode socratique." />
+    <meta name="theme-color" content="#0f172a" />
+    <title>Xaam-Xaam+ — Apprends à réfléchir, pas à copier</title>
+    <script>
+      // Applique le theme AVANT le premier rendu React, pour eviter un
+      // flash clair->sombre (ou l'inverse) au chargement/rafraichissement.
+      // Doit rester synchronise avec la logique de stores/themeStore.ts.
+      (function () {
+        try {
+          var raw = localStorage.getItem('xaamxaam-theme');
+          var preference = raw ? JSON.parse(raw).state.preference : 'system';
+          var estSombre =
+            preference === 'dark' ||
+            (preference === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          if (estSombre) document.documentElement.classList.add('dark');
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

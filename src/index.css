@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+/* Dark mode piloté par une classe .dark sur <html>, pas seulement par
+   prefers-color-scheme (Tailwind v4 est CSS-first depuis la v4, il faut
+   déclarer explicitement ce variant pour un toggle manuel persistant). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /* Palette de marque Xaam-Xaam+ : bleu nuit + jaune (clin d'œil au
+     logo/identité visuelle proposée dans le cahier des charges). */
+  --color-brand-50: oklch(0.97 0.02 95);
+  --color-brand-100: oklch(0.94 0.05 95);
+  --color-brand-400: oklch(0.83 0.15 95);
+  --color-brand-500: oklch(0.79 0.17 90);
+  --color-brand-600: oklch(0.7 0.17 85);
+
+  --color-ink-950: oklch(0.18 0.03 260);
+  --color-ink-900: oklch(0.22 0.03 260);
+  --color-ink-800: oklch(0.28 0.03 260);
+}
+
+:root {
+  color-scheme: light;
+  --toast-bg: #ffffff;
+  --toast-fg: #0f172a;
+  --toast-border: #e2e8f0;
+}
+
+html.dark {
+  color-scheme: dark;
+  --toast-bg: #1e2537;
+  --toast-fg: #f1f5f9;
+  --toast-border: rgba(255, 255, 255, 0.1);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  @apply bg-slate-50 text-slate-900 antialiased dark:bg-ink-950 dark:text-slate-100;
+}
+
+* {
+  scrollbar-width: thin;
+}
+
+/* Transition douce lors du changement de theme, sans l'appliquer au
+   premier rendu (evite un flash de transition au chargement). */
+.theme-ready * {
+  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease;
+}
+
+@layer utilities {
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
