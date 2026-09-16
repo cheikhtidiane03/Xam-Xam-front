@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { Users, Search, Ban, CheckCircle2 } from 'lucide-react'
-import { Card, CardBody } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
