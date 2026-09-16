@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { AlertTriangle, Trash2, Download } from 'lucide-react'
+import { AlertTriangle, Trash2, Download, KeyRound, Copy, Check } from 'lucide-react'
 import { Card, CardBody } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog'
@@ -13,6 +13,11 @@ export function EleveProfilPage() {
   const [modalSuppression, setModalSuppression] = useState(false)
   const [suppressionEnCours, setSuppressionEnCours] = useState(false)
   const [exportEnCours, setExportEnCours] = useState(false)
+
+  const [codeLiaison, setCodeLiaison] = useState<{ code: string; dateExpiration: string } | null>(null)
+  const [genererCodeEnCours, setGenererCodeEnCours] = useState(false)
+  const [copie, setCopie] = useState(false)
+
   const navigate = useNavigate()
 
   async function exporterMesDonnees() {
@@ -32,6 +37,26 @@ export function EleveProfilPage() {
     } finally {
       setExportEnCours(false)
     }
+  }
+
+  async function genererCode() {
+    setGenererCodeEnCours(true)
+    setCopie(false)
+    try {
+      const reponse = await eleveApi.genererCodeLiaisonParent()
+      setCodeLiaison(reponse)
+    } catch (err) {
+      notify.erreur(err)
+    } finally {
+      setGenererCodeEnCours(false)
+    }
+  }
+
+  async function copierCode() {
+    if (!codeLiaison) return
+    await navigator.clipboard.writeText(codeLiaison.code)
+    setCopie(true)
+    setTimeout(() => setCopie(false), 2000)
   }
 
   async function confirmerSuppression() {
@@ -73,6 +98,45 @@ export function EleveProfilPage() {
               </span>
             </div>
           </div>
+        </CardBody>
+      </Card>
+
+      <Card>
+        <CardBody>
+          <div className="flex items-center gap-2">
+            <KeyRound className="h-4.5 w-4.5 text-brand-500" />
+            <h2 className="font-semibold text-slate-900 dark:text-slate-100">Rattacher un parent</h2>
+          </div>
+          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+            Génère un code temporaire (valable 30 minutes) et partage-le avec ton parent pour qu'il puisse
+            suivre ta progression. Il devra le saisir sur son propre compte.
+          </p>
+
+          {!codeLiaison ? (
+            <Button variant="outline" size="sm" loading={genererCodeEnCours} onClick={genererCode} className="mt-3 gap-1.5">
+              <KeyRound className="h-4 w-4" /> Générer un code
+            </Button>
+          ) : (
+            <div className="mt-3 flex items-center gap-2 rounded-xl bg-brand-50 px-4 py-3 dark:bg-brand-500/10">
+              <span className="flex-1 font-mono text-xl font-bold tracking-widest text-brand-700 dark:text-brand-400">
+                {codeLiaison.code}
+              </span>
+              <button
+                onClick={copierCode}
+                title="Copier le code"
+                className="rounded-lg p-2 text-brand-600 hover:bg-brand-100 dark:text-brand-400 dark:hover:bg-brand-500/10"
+              >
+                {copie ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+              </button>
+            </div>
+          )}
+
+          {codeLiaison && (
+            <p className="mt-2 text-xs text-slate-400 dark:text-slate-500">
+              Expire à {new Date(codeLiaison.dateExpiration).toLocaleTimeString('fr-FR')} — génère-en un nouveau
+              s'il expire avant que ton parent l'utilise.
+            </p>
+          )}
         </CardBody>
       </Card>
 

@@ -6,6 +6,7 @@ import { useAuth } from '@/hooks/useAuth'
 import { authApi } from '@/api/auth'
 import { notify } from '@/lib/notify'
 import { LABEL_ROLE } from './navConfig'
+import { cheminEspaceRole } from '@/routes/ProtectedRoute'
 
 export function Topbar({ onOuvrirMenu }: { onOuvrirMenu: () => void }) {
   const { nom, prenom, role, emailVerifie, clearSession } = useAuth()
@@ -76,10 +77,10 @@ export function Topbar({ onOuvrirMenu }: { onOuvrirMenu: () => void }) {
                 </p>
               </div>
               <div className="my-1 h-px bg-slate-100 dark:bg-white/10" />
-              {role === 'ELEVE' && (
+              {role && (
                 <button
                   className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-sm text-slate-600 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-white/5"
-                  onClick={() => { setMenuOuvert(false); navigate('/eleve/profil') }}
+                  onClick={() => { setMenuOuvert(false); navigate(`${cheminEspaceRole(role)}/profil`) }}
                 >
                   <UserIcon className="h-4 w-4" /> Mon profil
                 </button>

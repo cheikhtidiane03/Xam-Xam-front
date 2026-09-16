@@ -8,6 +8,9 @@ export const superadminApi = {
   comptesEnAttente: () =>
     apiClient.get<UtilisateurAdmin[]>('/api/admin/comptes/en-attente').then((r) => r.data),
 
+    tousLesComptes: () =>
+    apiClient.get<UtilisateurAdmin[]>('/api/admin/comptes').then((r) => r.data),
+
   validerCompte: (utilisateurId: string) =>
     apiClient.post<void>(`/api/admin/comptes/${utilisateurId}/valider`),
 

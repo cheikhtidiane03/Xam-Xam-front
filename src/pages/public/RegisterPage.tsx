@@ -1,15 +1,17 @@
-import { useState, type FormEvent } from 'react'
+import { useState, useEffect, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthLayout } from './AuthLayout'
 import { Input } from '@/components/ui/Input'
 import { Select } from '@/components/ui/Select'
 import { Button } from '@/components/ui/Button'
 import { authApi } from '@/api/auth'
+import { publicApi } from '@/api/public'
 import { useAuth } from '@/hooks/useAuth'
 import { messageErreur } from '@/hooks/useApiError'
 import { notify } from '@/lib/notify'
 import { cheminEspaceRole } from '@/routes/ProtectedRoute'
 import type { Role } from '@/types/auth'
+import type { EtablissementPublicResponse } from '@/types/etablissement'
 
 const ROLES_PUBLICS: { value: Role; label: string }[] = [
   { value: 'ELEVE', label: 'Élève / Étudiant' },
@@ -24,6 +26,13 @@ const NIVEAUX_SCOLAIRES = [
   { groupe: 'Supérieur', options: ['LICENCE_1', 'LICENCE_2', 'LICENCE_3', 'MASTER_1', 'MASTER_2', 'DOCTORAT'] },
 ]
 
+// Roles pour lesquels un etablissement doit obligatoirement etre choisi.
+// L'Eleve peut aussi en choisir un (optionnel), mais peut aussi s'inscrire
+// sans (cf. section 3.1 du cahier des charges : etudiants du superieur
+// pas necessairement rattaches a un etablissement partenaire).
+const ROLES_NECESSITANT_ETABLISSEMENT: Role[] = ['ENSEIGNANT', 'ADMIN_ETABLISSEMENT']
+const ROLES_AVEC_ETABLISSEMENT_OPTIONNEL: Role[] = ['ELEVE']
+
 export function RegisterPage() {
   const [role, setRole] = useState<Role>('ELEVE')
   const [nom, setNom] = useState('')
@@ -32,15 +41,39 @@ export function RegisterPage() {
   const [motDePasse, setMotDePasse] = useState('')
   const [niveauScolaire, setNiveauScolaire] = useState('TROISIEME')
   const [matiere, setMatiere] = useState('')
+  const [etablissementId, setEtablissementId] = useState('')
+  const [etablissements, setEtablissements] = useState<EtablissementPublicResponse[]>([])
   const [erreur, setErreur] = useState<string | null>(null)
   const [chargement, setChargement] = useState(false)
 
   const { setSession } = useAuth()
   const navigate = useNavigate()
 
+  // Charge la liste des etablissements une seule fois au montage - endpoint
+  // public, pas besoin d'etre connecte (voir GET /api/public/etablissements).
+  useEffect(() => {
+    publicApi.listerEtablissements()
+      .then(setEtablissements)
+      .catch(() => {
+        // Si l'appel echoue (ex: backend indisponible), on laisse la liste
+        // vide plutot que de bloquer toute la page d'inscription : les
+        // roles ne necessitant pas d'etablissement restent utilisables.
+        setEtablissements([])
+      })
+  }, [])
+
+  const etablissementRequis = ROLES_NECESSITANT_ETABLISSEMENT.includes(role)
+  const etablissementVisible = etablissementRequis || ROLES_AVEC_ETABLISSEMENT_OPTIONNEL.includes(role)
+
   async function onSubmit(e: FormEvent) {
     e.preventDefault()
     setErreur(null)
+
+    if (etablissementRequis && !etablissementId) {
+      setErreur("Choisis l'établissement auquel ce compte est rattaché.")
+      return
+    }
+
     setChargement(true)
     try {
       const auth = await authApi.register({
@@ -51,6 +84,7 @@ export function RegisterPage() {
         role,
         niveauScolaire: role === 'ELEVE' ? niveauScolaire : undefined,
         matiere: role === 'ENSEIGNANT' ? matiere : undefined,
+        etablissementId: etablissementVisible && etablissementId ? etablissementId : undefined,
       })
 
       if (role === 'ELEVE' || role === 'PARENT') {
@@ -126,6 +160,29 @@ export function RegisterPage() {
             value={matiere}
             onChange={(e) => setMatiere(e.target.value)}
           />
+        )}
+
+        {etablissementVisible && (
+          <Select
+            label={etablissementRequis ? 'Établissement' : 'Établissement (optionnel)'}
+            required={etablissementRequis}
+            value={etablissementId}
+            onChange={(e) => setEtablissementId(e.target.value)}
+          >
+            <option value="">
+              {etablissements.length === 0 ? 'Aucun établissement disponible' : 'Sélectionner...'}
+            </option>
+            {etablissements.map((etab) => (
+              <option key={etab.id} value={etab.id}>{etab.nom}</option>
+            ))}
+          </Select>
+        )}
+
+        {etablissementRequis && etablissements.length === 0 && (
+          <p className="rounded-lg bg-amber-50 px-3 py-2 text-xs text-amber-800 dark:bg-amber-500/10 dark:text-amber-400">
+            Aucun établissement n'est encore disponible. Contacte un administrateur Xaam-Xaam+ pour qu'il en crée un
+            avant de pouvoir créer ce type de compte.
+          </p>
         )}
 
         {(role === 'ENSEIGNANT' || role === 'ADMIN_ETABLISSEMENT') && (
