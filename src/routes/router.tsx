@@ -30,6 +30,8 @@ import { SuperadminDashboardPage } from '@/pages/superadmin/SuperadminDashboardP
 import { SuperadminEtablissementsPage } from '@/pages/superadmin/SuperadminEtablissementsPage'
 import { SuperadminComptesPage } from '@/pages/superadmin/SuperadminComptesPage'
 import { SuperadminSignalementsPage } from '@/pages/superadmin/SuperadminSignalementsPage'
+import { SuperadminUtilisateursPage } from '@/pages/superadmin/SuperadminUtilisateursPage'
+import { SuperadminExercicesPage } from '@/pages/superadmin/SuperadminExercicesPage'
 
 export const router = createBrowserRouter([
   // ===== Public =====
@@ -112,6 +114,8 @@ export const router = createBrowserRouter([
           { path: '/superadmin/etablissements', element: <SuperadminEtablissementsPage /> },
           { path: '/superadmin/comptes', element: <SuperadminComptesPage /> },
           { path: '/superadmin/signalements', element: <SuperadminSignalementsPage /> },
+          { path: '/superadmin/utilisateurs', element: <SuperadminUtilisateursPage /> },
+          { path: '/superadmin/exercices', element: <SuperadminExercicesPage /> },
         ],
       },
     ],

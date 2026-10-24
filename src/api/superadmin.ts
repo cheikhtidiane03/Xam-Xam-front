@@ -1,5 +1,5 @@
 import { apiClient } from './client'
-import type { UtilisateurAdmin } from '@/types/compte'
+import type { UtilisateurAdmin, UtilisateurListe, ExerciceListe } from '@/types/compte'
 import type {
   EtablissementResponse, EtablissementRequest, VueGlobaleResponse, SignalementContournementResponse,
 } from '@/types/etablissement'
@@ -41,4 +41,14 @@ export const superadminApi = {
 
   traiterSignalement: (signalementId: string) =>
     apiClient.post<void>(`/api/admin/signalements-contournement/${signalementId}/traiter`),
+
+  listerUtilisateurs: (filtres: { role?: string; actif?: boolean } = {}) =>
+    apiClient
+      .get<UtilisateurListe[]>('/api/admin/utilisateurs', { params: filtres })
+      .then((r) => r.data),
+
+  listerExercices: (filtres: { periode?: string } = {}) =>
+    apiClient
+      .get<ExerciceListe[]>('/api/admin/exercices', { params: filtres })
+      .then((r) => r.data),
 }

@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { Plus, Building2, CheckCircle2, Trash2 } from 'lucide-react'
 import { Card, CardBody } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge'
@@ -14,11 +15,26 @@ import { superadminApi } from '@/api/superadmin'
 import { notify } from '@/lib/notify'
 import type { EtablissementResponse, TypeEtablissement } from '@/types/etablissement'
 
+const FILTRES: { valeur: string | null; label: string }[] = [
+  { valeur: null, label: 'Tous' },
+  { valeur: 'VALIDE', label: 'Validés' },
+  { valeur: 'EN_ATTENTE', label: 'En attente' },
+]
+
 export function SuperadminEtablissementsPage() {
   const { donnees: etablissements, chargement, recharger } = useFetch(
     () => superadminApi.listerEtablissements(),
     []
   )
+  const [params, setParams] = useSearchParams()
+  const statut = params.get('statut') // 'VALIDE' | 'EN_ATTENTE' | null
+
+  const etablissementsFiltres = etablissements?.filter((e) =>
+    statut === 'EN_ATTENTE' ? e.enAttenteValidation
+    : statut === 'VALIDE' ? !e.enAttenteValidation
+    : true
+  )
+
   const [modalOuverte, setModalOuverte] = useState(false)
   const [etablissementARetirer, setEtablissementARetirer] = useState<EtablissementResponse | null>(null)
 
@@ -84,14 +100,27 @@ export function SuperadminEtablissementsPage() {
         </Button>
       </div>
 
+      <div className="flex flex-wrap gap-2">
+        {FILTRES.map((f) => (
+          <Button
+            key={f.label}
+            size="sm"
+            variant={statut === f.valeur ? undefined : 'outline'}
+            onClick={() => (f.valeur ? setParams({ statut: f.valeur }) : setParams({}))}
+          >
+            {f.label}
+          </Button>
+        ))}
+      </div>
+
       {chargement && <FullPageSpinner />}
 
-      {etablissements && etablissements.length === 0 && (
+      {etablissementsFiltres && etablissementsFiltres.length === 0 && (
         <EmptyState icon={<Building2 className="h-8 w-8" />} titre="Aucun établissement" />
       )}
 
       <div className="grid gap-3 sm:grid-cols-2">
-        {etablissements?.map((etab) => (
+        {etablissementsFiltres?.map((etab) => (
           <Card key={etab.id}>
             <CardBody className="flex items-center justify-between gap-3">
               <div>
