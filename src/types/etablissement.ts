@@ -8,6 +8,11 @@ export interface EtablissementResponse {
   dateExpirationLicence: string | null
   enAttenteValidation: boolean
 }
+export interface EtablissementPublicResponse {
+  id: string
+  nom: string
+  type: TypeEtablissement
+}
 
 export interface EtablissementRequest {
   nom: string

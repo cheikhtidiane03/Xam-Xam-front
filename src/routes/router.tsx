@@ -9,6 +9,8 @@ import { ForgotPasswordPage } from '@/pages/public/ForgotPasswordPage'
 import { ResetPasswordPage } from '@/pages/public/ResetPasswordPage'
 import { VerifyEmailPage } from '@/pages/public/VerifyEmailPage'
 
+import { ProfilGenericPage } from '@/pages/shared/ProfilGenericPage'
+
 import { EleveDashboardPage } from '@/pages/eleve/EleveDashboardPage'
 import { EleveExercicesPage } from '@/pages/eleve/EleveExercicesPage'
 import { EleveExerciceDetailPage } from '@/pages/eleve/EleveExerciceDetailPage'
@@ -69,6 +71,7 @@ export const router = createBrowserRouter([
         children: [
           { path: '/parent', element: <ParentDashboardPage /> },
           { path: '/parent/enfants/:eleveId', element: <ParentEnfantDetailPage /> },
+          { path: '/parent/profil', element: <ProfilGenericPage /> },
         ],
       },
     ],
@@ -83,6 +86,7 @@ export const router = createBrowserRouter([
         children: [
           { path: '/enseignant', element: <EnseignantDashboardPage /> },
           { path: '/enseignant/bibliotheque', element: <EnseignantBibliothequePage /> },
+          { path: '/enseignant/profil', element: <ProfilGenericPage /> },
         ],
       },
     ],
@@ -98,6 +102,7 @@ export const router = createBrowserRouter([
           { path: '/admin-etablissement', element: <AdminEtablissementDashboardPage /> },
           { path: '/admin-etablissement/eleves', element: <AdminEtablissementElevesPage /> },
           { path: '/admin-etablissement/enseignants', element: <AdminEtablissementEnseignantsPage /> },
+          { path: '/admin-etablissement/profil', element: <ProfilGenericPage /> },
         ],
       },
     ],
@@ -113,9 +118,11 @@ export const router = createBrowserRouter([
           { path: '/superadmin', element: <SuperadminDashboardPage /> },
           { path: '/superadmin/etablissements', element: <SuperadminEtablissementsPage /> },
           { path: '/superadmin/comptes', element: <SuperadminComptesPage /> },
+          { path: '/superadmin/utilisateurs', element: <SuperadminUtilisateursPage /> },
           { path: '/superadmin/signalements', element: <SuperadminSignalementsPage /> },
           { path: '/superadmin/utilisateurs', element: <SuperadminUtilisateursPage /> },
           { path: '/superadmin/exercices', element: <SuperadminExercicesPage /> },
+          { path: '/superadmin/profil', element: <ProfilGenericPage /> },
         ],
       },
     ],

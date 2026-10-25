@@ -33,6 +33,7 @@ export const NAV_PAR_ROLE: Record<Role, NavItem[]> = {
   SUPERADMIN: [
     { label: 'Vue globale', to: '/superadmin', icon: LayoutDashboard },
     { label: 'Établissements', to: '/superadmin/etablissements', icon: Building2 },
+    { label: 'Utilisateurs', to: '/superadmin/utilisateurs', icon: Users },
     { label: 'Comptes en attente', to: '/superadmin/comptes', icon: UserCog },
     { label: 'Signalements', to: '/superadmin/signalements', icon: ShieldAlert },
   ],
