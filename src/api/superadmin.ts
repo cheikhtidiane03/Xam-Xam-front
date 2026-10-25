@@ -44,7 +44,6 @@ export const superadminApi = {
 
   traiterSignalement: (signalementId: string) =>
     apiClient.post<void>(`/api/admin/signalements-contournement/${signalementId}/traiter`),
-<<<<<<< HEAD
 
   listerUtilisateurs: (filtres: { role?: string; actif?: boolean } = {}) =>
     apiClient
@@ -56,6 +55,4 @@ export const superadminApi = {
       .get<ExerciceListe[]>('/api/admin/exercices', { params: filtres })
       .then((r) => r.data),
 }
-=======
-}
->>>>>>> 6e91a93666ea50bd31e5537617959e5cea8c6044
+
