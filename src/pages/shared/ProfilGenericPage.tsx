@@ -1,3 +1,4 @@
+
 import { UserCircle } from 'lucide-react'
 import { Card, CardBody } from '@/components/ui/Card'
 import { useAuth } from '@/hooks/useAuth'
@@ -17,8 +18,8 @@ export function ProfilGenericPage() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Mon profil</h1>
-        <p className="text-sm text-slate-500 dark:text-slate-400">Informations de ton compte.</p>
+        <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">My Profile</h1>
+        <p className="text-sm text-slate-500 dark:text-slate-400">Your account information.</p>
       </div>
 
       <Card>
@@ -39,9 +40,9 @@ export function ProfilGenericPage() {
               <span className="font-medium text-slate-800 dark:text-slate-200">{email}</span>
             </div>
             <div className="flex justify-between pt-1">
-              <span className="text-slate-500 dark:text-slate-400">Email vérifié</span>
+              <span className="text-slate-500 dark:text-slate-400">Email Verified</span>
               <span className={emailVerifie ? 'font-medium text-emerald-600 dark:text-emerald-400' : 'font-medium text-amber-600 dark:text-amber-400'}>
-                {emailVerifie ? 'Oui' : 'Non'}
+                {emailVerifie ? 'Yes' : 'No'}
               </span>
             </div>
           </div>
@@ -49,7 +50,7 @@ export function ProfilGenericPage() {
       </Card>
 
       <p className="text-xs text-slate-400 dark:text-slate-500">
-        Pour modifier tes informations ou supprimer ton compte, contacte un administrateur Xaam-Xaam+.
+        To update your information or delete your account, contact a Xaam-Xaam+ administrator.
       </p>
     </div>
   )
