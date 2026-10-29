@@ -47,11 +47,11 @@ export function Topbar({ onOuvrirMenu }: { onOuvrirMenu: () => void }) {
       <div className="hidden lg:block" />
 
       <div className="flex items-center gap-2">
-        {!emailVerifie && (
+        {/* {!emailVerifie && (
           <span className="hidden rounded-full bg-amber-100 px-3 py-1 text-xs font-medium text-amber-800 dark:bg-amber-500/15 dark:text-amber-400 sm:inline-block">
             Email not verified
           </span>
-        )}
+        )} */}
 
         <ThemeToggle />
 
