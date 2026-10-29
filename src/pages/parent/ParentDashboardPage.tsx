@@ -1,3 +1,4 @@
+
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { UserPlus, Baby, ChevronRight, UserMinus } from 'lucide-react'
@@ -24,7 +25,7 @@ export function ParentDashboardPage() {
     setDetachementEnCours(true)
     try {
       await parentApi.delierEnfant(enfantADetacher.id)
-      notify.succes(`${enfantADetacher.prenom} a été détaché de ton compte.`)
+      notify.succes(`${enfantADetacher.prenom} has been unlinked from your account.`)
       recharger()
     } catch (err) {
       notify.erreur(err)
@@ -37,13 +38,13 @@ export function ParentDashboardPage() {
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Mes enfants</h1>
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">My Children</h1>
           <p className="text-sm text-slate-500 dark:text-slate-400">
-            Suis l'effort de réflexion réel de tes enfants, pas juste leurs notes.
+            Track your children's actual thinking efforts, not just their grades.
           </p>
         </div>
         <Button onClick={() => setModalOuverte(true)} className="gap-1.5">
-          <UserPlus className="h-4 w-4" /> Rattacher un enfant
+          <UserPlus className="h-4 w-4" /> Link a Child
         </Button>
       </div>
 
@@ -52,11 +53,11 @@ export function ParentDashboardPage() {
       {enfants && enfants.length === 0 && (
         <EmptyState
           icon={<Baby className="h-8 w-8" />}
-          titre="Aucun enfant rattaché"
-          description="Demande à ton enfant un code de liaison depuis son compte pour le rattacher ici."
+          titre="No Children Linked"
+          description="Ask your child for a linking code from their account to link them here."
           action={
             <Button size="sm" onClick={() => setModalOuverte(true)} className="gap-1.5">
-              <UserPlus className="h-4 w-4" /> Rattacher un enfant
+              <UserPlus className="h-4 w-4" /> Link a Child
             </Button>
           }
         />
@@ -77,7 +78,7 @@ export function ParentDashboardPage() {
                     </p>
                     <div className="mt-0.5 flex items-center gap-1.5">
                       <Badge tone="neutral">{enfant.niveauScolaire.replace('_', ' ')}</Badge>
-                      {!enfant.actif && <Badge tone="warning">Inactif</Badge>}
+                      {!enfant.actif && <Badge tone="warning">Inactive</Badge>}
                     </div>
                   </div>
                 </div>
@@ -86,7 +87,7 @@ export function ParentDashboardPage() {
             </Link>
             <button
               onClick={(e) => { e.preventDefault(); setEnfantADetacher(enfant) }}
-              title="Détacher cet enfant"
+              title="Unlink this child"
               className="absolute right-3 top-3 rounded-lg p-1.5 text-slate-300 opacity-0 transition-opacity hover:bg-red-50 hover:text-red-500 group-hover:opacity-100 dark:text-slate-600 dark:hover:bg-red-500/10"
             >
               <UserMinus className="h-4 w-4" />
@@ -106,13 +107,13 @@ export function ParentDashboardPage() {
         onFermer={() => setEnfantADetacher(null)}
         onConfirmer={confirmerDetachement}
         chargement={detachementEnCours}
-        titre="Détacher cet enfant ?"
+        titre="Unlink this child?"
         description={
           enfantADetacher
-            ? `Tu n'auras plus accès au suivi de ${enfantADetacher.prenom} ${enfantADetacher.nom} tant qu'il ne sera pas rerattaché avec un nouveau code.`
+            ? `You will no longer have access to ${enfantADetacher.prenom} ${enfantADetacher.nom}'s progress until they are linked again using a new code.`
             : ''
         }
-        libelleBouton="Détacher"
+        libelleBouton="Unlink"
       />
     </div>
   )
