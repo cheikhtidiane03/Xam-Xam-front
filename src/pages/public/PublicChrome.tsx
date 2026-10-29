@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom'
 import { GraduationCap } from 'lucide-react'
 import { ThemeToggle } from '@/components/layout/ThemeToggle'
@@ -17,10 +18,10 @@ export function PublicHeader() {
         <div className="flex items-center gap-2">
           <ThemeToggle />
           <Link to="/connexion">
-            <Button variant="ghost" size="sm">Se connecter</Button>
+            <Button variant="ghost" size="sm">Log In</Button>
           </Link>
           <Link to="/inscription">
-            <Button variant="primary" size="sm">Créer un compte</Button>
+            <Button variant="primary" size="sm">Sign Up</Button>
           </Link>
         </div>
       </div>
@@ -39,10 +40,10 @@ export function PublicFooter() {
           <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">Xaam-Xaam+</span>
         </div>
         <p className="max-w-md text-xs text-slate-500 dark:text-slate-400">
-          Accompagnement scolaire par IA guidée. L'IA pose des questions, jamais des réponses toutes faites.
+          Educational support powered by guided AI. The AI asks questions, never provides ready-made answers.
         </p>
         <p className="text-xs text-slate-400 dark:text-slate-500">
-          © {new Date().getFullYear()} Xaam-Xaam+ — Dakar, Sénégal
+          © {new Date().getFullYear()} Xaam-Xaam+ — Dakar, Senegal
         </p>
       </div>
     </footer>

@@ -1,3 +1,4 @@
+
 import { useState, type FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { CheckCircle2 } from 'lucide-react'
@@ -29,15 +30,15 @@ export function ForgotPasswordPage() {
 
   if (envoye) {
     return (
-      <AuthLayout titre="Vérifie ta boîte mail">
+      <AuthLayout titre="Check Your Inbox">
         <div className="flex flex-col items-center gap-3 py-4 text-center">
           <CheckCircle2 className="h-10 w-10 text-emerald-500" />
           <p className="text-sm text-slate-600 dark:text-slate-300">
-            Si un compte existe avec l'adresse <strong>{email}</strong>, un email vient de t'être envoyé
-            avec un lien de réinitialisation.
+            If an account exists with the email address <strong>{email}</strong>, an email has just been sent
+            to you with a password reset link.
           </p>
           <Link to="/connexion" className="mt-2 text-sm font-medium text-brand-600 hover:underline dark:text-brand-400">
-            Retour à la connexion
+            Back to Login
           </Link>
         </div>
       </AuthLayout>
@@ -45,7 +46,7 @@ export function ForgotPasswordPage() {
   }
 
   return (
-    <AuthLayout titre="Mot de passe oublié" sousTitre="On t'envoie un lien de réinitialisation par email">
+    <AuthLayout titre="Forgot Password" sousTitre="We'll send you a password reset link by email">
       <form onSubmit={onSubmit} className="flex flex-col gap-4">
         <Input
           label="Email"
@@ -60,12 +61,12 @@ export function ForgotPasswordPage() {
           </p>
         )}
         <Button type="submit" loading={chargement} className="w-full">
-          Envoyer le lien
+          Send Reset Link
         </Button>
       </form>
       <p className="mt-6 text-center text-sm text-slate-500 dark:text-slate-400">
         <Link to="/connexion" className="font-medium text-brand-600 hover:underline dark:text-brand-400">
-          Retour à la connexion
+          Back to Login
         </Link>
       </p>
     </AuthLayout>

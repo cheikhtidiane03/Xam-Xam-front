@@ -1,3 +1,4 @@
+
 import { useState, type FormEvent } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { AuthLayout } from './AuthLayout'
@@ -23,7 +24,7 @@ export function ResetPasswordPage() {
     setChargement(true)
     try {
       await authApi.reinitialiserMotDePasse({ token, nouveauMotDePasse })
-      notify.succes('Mot de passe mis à jour. Tu peux te connecter.')
+      notify.succes('Password updated. You can now log in.')
       navigate('/connexion', { replace: true })
     } catch (err) {
       setErreur(messageErreur(err))
@@ -33,21 +34,21 @@ export function ResetPasswordPage() {
   }
 
   return (
-    <AuthLayout titre="Choisir un nouveau mot de passe">
+    <AuthLayout titre="Choose a New Password">
       <form onSubmit={onSubmit} className="flex flex-col gap-4">
         <Input
-          label="Token de réinitialisation"
-          hint="Copié depuis le lien reçu par email"
+          label="Password Reset Token"
+          hint="Copied from the link you received by email"
           required
           value={token}
           onChange={(e) => setToken(e.target.value)}
         />
         <Input
-          label="Nouveau mot de passe"
+          label="New Password"
           type="password"
           required
           minLength={8}
-          hint="8 caractères minimum"
+          hint="Minimum 8 characters"
           value={nouveauMotDePasse}
           onChange={(e) => setNouveauMotDePasse(e.target.value)}
         />
@@ -57,12 +58,12 @@ export function ResetPasswordPage() {
           </p>
         )}
         <Button type="submit" loading={chargement} className="w-full">
-          Mettre à jour le mot de passe
+          Update Password
         </Button>
       </form>
       <p className="mt-6 text-center text-sm text-slate-500 dark:text-slate-400">
         <Link to="/connexion" className="font-medium text-brand-600 hover:underline dark:text-brand-400">
-          Retour à la connexion
+          Back to Login
         </Link>
       </p>
     </AuthLayout>

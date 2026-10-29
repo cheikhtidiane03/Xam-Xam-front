@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom'
 import {
   MessageCircleQuestion, Lightbulb, PenLine, LineChart,
@@ -10,41 +11,41 @@ import { Card, CardBody } from '@/components/ui/Card'
 const ETAPES = [
   {
     icon: PenLine,
-    titre: 'Tu poses ton exercice',
-    description: 'Texte libre ou photo — Xaam-Xaam+ lit ton énoncé, jamais besoin de le retaper.',
+    titre: 'Submit Your Exercise',
+    description: 'Type your exercise or upload a photo — Xaam-Xaam+ reads the instructions, so you never need to type them out.',
   },
   {
     icon: MessageCircleQuestion,
-    titre: "L'IA te questionne",
-    description: "Jamais de réponse toute faite : une question qui t'aide à avancer par toi-même.",
+    titre: 'The AI Asks You Questions',
+    description: 'Never a ready-made answer: just a question to help you move forward on your own.',
   },
   {
     icon: Lightbulb,
-    titre: 'Des indices si besoin',
-    description: '3 niveaux d\'indices progressifs, débloqués un par un, seulement si tu bloques vraiment.',
+    titre: 'Hints When You Need Them',
+    description: '3 levels of progressive hints, unlocked one at a time, only when you really get stuck.',
   },
   {
     icon: LineChart,
-    titre: 'Tu expliques ta démarche',
-    description: 'La dernière étape : reformule avec tes mots. C\'est là que la compréhension se vérifie.',
+    titre: 'Explain Your Approach',
+    description: 'The final step: explain your reasoning in your own words. This is where your understanding is assessed.',
   },
 ]
 
 const PUBLICS = [
   {
     icon: GraduationCap,
-    titre: 'Élèves & étudiants',
-    description: 'Du collège au supérieur — un parcours guidé adapté à ton niveau, jamais une réponse copiée-collée.',
+    titre: 'Pupils & Students',
+    description: 'From middle school to higher education — a guided learning journey tailored to your level, never a copied-and-pasted answer.',
   },
   {
     icon: Users,
     titre: 'Parents',
-    description: 'Suis l\'effort réel de réflexion de ton enfant, pas juste ses notes.',
+    description: "Track your child's actual thinking effort, not just their grades.",
   },
   {
     icon: School,
-    titre: 'Établissements',
-    description: 'Des statistiques de classe pour piloter et sensibiliser à un usage réfléchi de l\'IA.',
+    titre: 'Educational Institutions',
+    description: 'Class statistics to support teaching and encourage thoughtful AI use.',
   },
 ]
 
@@ -59,25 +60,25 @@ export function LandingPage() {
         <div className="mx-auto max-w-6xl px-4 py-20 lg:px-8 lg:py-28">
           <div className="mx-auto max-w-2xl text-center">
             <span className="inline-flex items-center rounded-full bg-brand-100 px-3 py-1 text-xs font-medium text-brand-600 dark:bg-brand-500/10 dark:text-brand-400">
-              Méthode socratique · IA guidée
+              Socratic Method · Guided AI
             </span>
             <h1 className="mt-5 text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-50 sm:text-5xl">
-              Apprends à réfléchir,
+              Learn to Think,
               <br />
-              pas à copier.
+              Don't Just Copy.
             </h1>
             <p className="mt-5 text-lg text-slate-600 dark:text-slate-300">
-              Xaam-Xaam+ transforme l'IA en outil pédagogique : elle pose des questions qui te font
-              avancer, jamais des réponses toutes faites à recopier.
+              Xaam-Xaam+ turns AI into an educational tool: it asks questions that help you make
+              progress, never ready-made answers to copy.
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Link to="/inscription">
                 <Button size="lg" className="gap-2">
-                  Commencer gratuitement <ArrowRight className="h-4 w-4" />
+                  Get Started for Free <ArrowRight className="h-4 w-4" />
                 </Button>
               </Link>
               <Link to="/connexion">
-                <Button size="lg" variant="outline">J'ai déjà un compte</Button>
+                <Button size="lg" variant="outline">I Already Have an Account</Button>
               </Link>
             </div>
           </div>
@@ -87,10 +88,10 @@ export function LandingPage() {
       {/* Comment ça marche */}
       <section className="mx-auto max-w-6xl px-4 py-16 lg:px-8">
         <h2 className="text-center text-2xl font-bold text-slate-900 dark:text-slate-100">
-          Comment ça marche
+          How It Works
         </h2>
         <p className="mx-auto mt-2 max-w-lg text-center text-sm text-slate-500 dark:text-slate-400">
-          Un parcours en 4 étapes pensé pour renforcer ta réflexion, pas la remplacer.
+          A 4-step learning journey designed to strengthen your thinking, not replace it.
         </p>
 
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -100,7 +101,7 @@ export function LandingPage() {
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-100 text-brand-600 dark:bg-brand-500/10 dark:text-brand-400">
                   <etape.icon className="h-5 w-5" />
                 </div>
-                <p className="mt-3 text-xs font-medium text-brand-500">Étape {i + 1}</p>
+                <p className="mt-3 text-xs font-medium text-brand-500">Step {i + 1}</p>
                 <p className="mt-1 font-semibold text-slate-900 dark:text-slate-100">{etape.titre}</p>
                 <p className="mt-1.5 text-sm text-slate-500 dark:text-slate-400">{etape.description}</p>
               </CardBody>
@@ -113,7 +114,7 @@ export function LandingPage() {
       <section className="bg-slate-50 py-16 dark:bg-white/[0.02]">
         <div className="mx-auto max-w-6xl px-4 lg:px-8">
           <h2 className="text-center text-2xl font-bold text-slate-900 dark:text-slate-100">
-            Pensé pour toute la famille éducative
+            Designed for the Entire Learning Community
           </h2>
 
           <div className="mt-10 grid gap-5 sm:grid-cols-3">
@@ -139,11 +140,11 @@ export function LandingPage() {
             </div>
             <div>
               <p className="font-semibold text-slate-900 dark:text-slate-100">
-                Conçu en priorité pour la sécurité des mineurs
+                Designed with Minors' Safety as a Priority
               </p>
               <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-                Consentement parental, contrôle par le compte élève de qui accède à ses données,
-                export et suppression sur demande.
+                Parental consent, student-controlled access to personal data, and data export
+                and deletion upon request.
               </p>
             </div>
           </CardBody>
@@ -153,12 +154,12 @@ export function LandingPage() {
       {/* CTA final */}
       <section className="mx-auto max-w-3xl px-4 pb-20 text-center lg:px-8">
         <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
-          Prêt à changer ta façon d'apprendre ?
+          Ready to Change the Way You Learn?
         </h2>
         <div className="mt-6">
           <Link to="/inscription">
             <Button size="lg" className="gap-2">
-              Créer mon compte gratuitement <ArrowRight className="h-4 w-4" />
+              Create My Free Account <ArrowRight className="h-4 w-4" />
             </Button>
           </Link>
         </div>
