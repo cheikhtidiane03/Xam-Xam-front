@@ -1,3 +1,4 @@
+
 import { useState, type FormEvent } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Plus, Building2, CheckCircle2, Trash2 } from 'lucide-react'
@@ -16,9 +17,9 @@ import { notify } from '@/lib/notify'
 import type { EtablissementResponse, TypeEtablissement } from '@/types/etablissement'
 
 const FILTRES: { valeur: string | null; label: string }[] = [
-  { valeur: null, label: 'Tous' },
-  { valeur: 'VALIDE', label: 'Validés' },
-  { valeur: 'EN_ATTENTE', label: 'En attente' },
+  { valeur: null, label: 'All' },
+  { valeur: 'VALIDE', label: 'Approved' },
+  { valeur: 'EN_ATTENTE', label: 'Pending' },
 ]
 
 export function SuperadminEtablissementsPage() {
@@ -50,7 +51,7 @@ export function SuperadminEtablissementsPage() {
     setEnvoiEnCours(true)
     try {
       await superadminApi.creerEtablissement({ nom, type, adresse })
-      notify.succes('Établissement créé (en attente de validation).')
+      notify.succes('Institution created (pending approval).')
       setNom(''); setAdresse('')
       setModalOuverte(false)
       recharger()
@@ -65,7 +66,7 @@ export function SuperadminEtablissementsPage() {
     setValidationEnCours(id)
     try {
       await superadminApi.validerEtablissement(id)
-      notify.succes('Établissement validé, licence activée.')
+      notify.succes('Institution approved, license activated.')
       recharger()
     } catch (err) {
       notify.erreur(err)
@@ -79,7 +80,7 @@ export function SuperadminEtablissementsPage() {
     setSuppressionEnCours(true)
     try {
       await superadminApi.retirerEtablissement(etablissementARetirer.id)
-      notify.succes('Établissement retiré.')
+      notify.succes('Institution removed.')
       recharger()
     } catch (err) {
       notify.erreur(err)
@@ -92,11 +93,11 @@ export function SuperadminEtablissementsPage() {
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Établissements</h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400">Gère les établissements partenaires.</p>
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Institutions</h1>
+          <p className="text-sm text-slate-500 dark:text-slate-400">Manage partner institutions.</p>
         </div>
         <Button onClick={() => setModalOuverte(true)} className="gap-1.5">
-          <Plus className="h-4 w-4" /> Ajouter un établissement
+          <Plus className="h-4 w-4" /> Add an Institution
         </Button>
       </div>
 
@@ -116,7 +117,7 @@ export function SuperadminEtablissementsPage() {
       {chargement && <FullPageSpinner />}
 
       {etablissementsFiltres && etablissementsFiltres.length === 0 && (
-        <EmptyState icon={<Building2 className="h-8 w-8" />} titre="Aucun établissement" />
+        <EmptyState icon={<Building2 className="h-8 w-8" />} titre="No Institutions" />
       )}
 
       <div className="grid gap-3 sm:grid-cols-2">
@@ -128,9 +129,9 @@ export function SuperadminEtablissementsPage() {
                 <p className="text-xs text-slate-500 dark:text-slate-400">{etab.type.replace('_', '/')}</p>
                 <div className="mt-1.5 flex items-center gap-1.5">
                   <Badge tone={etab.licenceActive ? 'success' : 'warning'}>
-                    {etab.licenceActive ? 'Licence active' : 'Licence inactive'}
+                    {etab.licenceActive ? 'License Active' : 'License Inactive'}
                   </Badge>
-                  {etab.enAttenteValidation && <Badge tone="danger">En attente</Badge>}
+                  {etab.enAttenteValidation && <Badge tone="danger">Pending</Badge>}
                 </div>
               </div>
               <div className="flex shrink-0 gap-2">
@@ -142,7 +143,7 @@ export function SuperadminEtablissementsPage() {
                     onClick={() => valider(etab.id)}
                     className="gap-1.5"
                   >
-                    <CheckCircle2 className="h-4 w-4" /> Valider
+                    <CheckCircle2 className="h-4 w-4" /> Approve
                   </Button>
                 )}
                 <Button
@@ -159,18 +160,18 @@ export function SuperadminEtablissementsPage() {
         ))}
       </div>
 
-      <Modal ouvert={modalOuverte} onFermer={() => setModalOuverte(false)} titre="Ajouter un établissement">
+      <Modal ouvert={modalOuverte} onFermer={() => setModalOuverte(false)} titre="Add an Institution">
         <form onSubmit={onSubmit} className="flex flex-col gap-4">
-          <Input label="Nom" required value={nom} onChange={(e) => setNom(e.target.value)} />
+          <Input label="Name" required value={nom} onChange={(e) => setNom(e.target.value)} />
           <Select label="Type" value={type} onChange={(e) => setType(e.target.value as TypeEtablissement)}>
-            <option value="COLLEGE">Collège</option>
-            <option value="LYCEE">Lycée</option>
-            <option value="COLLEGE_LYCEE">Collège/Lycée</option>
+            <option value="COLLEGE">Middle School</option>
+            <option value="LYCEE">High School</option>
+            <option value="COLLEGE_LYCEE">Middle School/High School</option>
           </Select>
-          <Input label="Adresse" value={adresse} onChange={(e) => setAdresse(e.target.value)} />
+          <Input label="Address" value={adresse} onChange={(e) => setAdresse(e.target.value)} />
           <div className="flex justify-end gap-2 pt-2">
-            <Button type="button" variant="outline" onClick={() => setModalOuverte(false)}>Annuler</Button>
-            <Button type="submit" loading={envoiEnCours}>Créer</Button>
+            <Button type="button" variant="outline" onClick={() => setModalOuverte(false)}>Cancel</Button>
+            <Button type="submit" loading={envoiEnCours}>Create</Button>
           </div>
         </form>
       </Modal>
@@ -180,14 +181,14 @@ export function SuperadminEtablissementsPage() {
         onFermer={() => setEtablissementARetirer(null)}
         onConfirmer={confirmerRetrait}
         chargement={suppressionEnCours}
-        titre="Retirer cet établissement ?"
+        titre="Remove this institution?"
         description={
           etablissementARetirer
-            ? `"${etablissementARetirer.nom}" sera définitivement retiré. Cette action est irréversible.`
+            ? `"${etablissementARetirer.nom}" will be permanently removed. This action cannot be undone.`
             : ''
         }
         texteConfirmation={etablissementARetirer?.nom}
-        libelleBouton="Retirer définitivement"
+        libelleBouton="Remove Permanently"
       />
     </div>
   )

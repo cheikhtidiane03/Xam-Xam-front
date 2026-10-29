@@ -1,3 +1,4 @@
+
 import { useState } from 'react'
 import { ShieldAlert, CheckCircle2 } from 'lucide-react'
 import { Card, CardBody } from '@/components/ui/Card'
@@ -10,9 +11,9 @@ import { superadminApi } from '@/api/superadmin'
 import { notify } from '@/lib/notify'
 
 const LABEL_TYPE: Record<string, string> = {
-  COPIE_ENONCE: "Copie de l'énoncé",
-  REPONSE_ANORMALEMENT_LONGUE: 'Réponse anormalement longue',
-  RAPIDITE_SUSPECTE: 'Rapidité suspecte',
+  COPIE_ENONCE: 'Copied Exercise Instructions',
+  REPONSE_ANORMALEMENT_LONGUE: 'Unusually Long Answer',
+  RAPIDITE_SUSPECTE: 'Suspiciously Fast Response',
 }
 
 export function SuperadminSignalementsPage() {
@@ -26,7 +27,7 @@ export function SuperadminSignalementsPage() {
     setActionEnCours(id)
     try {
       await superadminApi.traiterSignalement(id)
-      notify.succes('Signalement marqué comme traité.')
+      notify.succes('Report marked as reviewed.')
       recharger()
     } catch (err) {
       notify.erreur(err)
@@ -38,9 +39,9 @@ export function SuperadminSignalementsPage() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Signalements de contournement</h1>
+        <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Potential Misconduct Reports</h1>
         <p className="text-sm text-slate-500 dark:text-slate-400">
-          Générés automatiquement (copie d'énoncé, réponse suspecte...). Ne bloquent jamais l'élève : à toi de juger.
+          Automatically generated reports (copied exercise instructions, suspicious answers, etc.). Students are never blocked: you decide how to handle each case.
         </p>
       </div>
 
@@ -49,8 +50,8 @@ export function SuperadminSignalementsPage() {
       {signalements && signalements.length === 0 && (
         <EmptyState
           icon={<ShieldAlert className="h-8 w-8" />}
-          titre="Aucun signalement en attente"
-          description="Tout est calme pour le moment."
+          titre="No Pending Reports"
+          description="Everything is quiet for now."
         />
       )}
 
@@ -75,7 +76,7 @@ export function SuperadminSignalementsPage() {
                 onClick={() => traiter(s.id)}
                 className="gap-1.5 shrink-0"
               >
-                <CheckCircle2 className="h-4 w-4" /> Marquer traité
+                <CheckCircle2 className="h-4 w-4" /> Mark as Reviewed
               </Button>
             </CardBody>
           </Card>

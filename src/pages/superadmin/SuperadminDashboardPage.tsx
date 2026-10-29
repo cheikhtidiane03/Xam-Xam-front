@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom'
 import { Users, GraduationCap, Building2, Clock, BookOpen, ChevronRight } from 'lucide-react'
 import { Card, CardBody } from '@/components/ui/Card'
@@ -21,7 +22,7 @@ function StatCard({
   return (
     <Link
       to={to}
-      aria-label={`${label}${precision ? ` (${precision})` : ''} : ${valeur}. Voir le détail`}
+      aria-label={`${label}${precision ? ` (${precision})` : ''}: ${valeur}. View details`}
       className="group block h-full rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
     >
       <Card className="relative h-full transition group-hover:-translate-y-0.5 group-hover:shadow-md">
@@ -51,40 +52,40 @@ export function SuperadminDashboardPage() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Vue globale du projet</h1>
-        <p className="text-sm text-slate-500 dark:text-slate-400">L'état de la plateforme Xaam-Xaam+ en un coup d'œil.</p>
+        <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Project Overview</h1>
+        <p className="text-sm text-slate-500 dark:text-slate-400">Xaam-Xaam+ platform status at a glance.</p>
       </div>
 
       {vue.donnees && (
         <div className="grid grid-cols-2 items-stretch gap-4 md:grid-cols-3 2xl:grid-cols-5">
           <StatCard
             icon={Users}
-            label="Utilisateurs"
+            label="Users"
             valeur={vue.donnees.nombreUtilisateursTotal}
             to="/superadmin/utilisateurs"
           />
           <StatCard
             icon={GraduationCap}
-            label="Élèves actifs"
-            precision="30 derniers jours"
+            label="Active Students"
+            precision="Last 30 days"
             valeur={vue.donnees.nombreElevesActifs}
             to="/superadmin/utilisateurs?role=ELEVE&actif=true"
           />
           <StatCard
             icon={Building2}
-            label="Établissements validés"
+            label="Approved Institutions"
             valeur={vue.donnees.nombreEtablissementsValides}
             to="/superadmin/etablissements?statut=VALIDE"
           />
           <StatCard
             icon={Clock}
-            label="Établissements en attente"
+            label="Pending Institutions"
             valeur={vue.donnees.nombreEtablissementsEnAttente}
             to="/superadmin/etablissements?statut=EN_ATTENTE"
           />
           <StatCard
             icon={BookOpen}
-            label="Exercices aujourd'hui"
+            label="Exercises Today"
             valeur={vue.donnees.nombreExercicesAujourdHui}
             to="/superadmin/exercices?periode=aujourdhui"
           />

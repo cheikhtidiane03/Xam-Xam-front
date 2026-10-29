@@ -1,3 +1,4 @@
+
 import { useSearchParams } from 'react-router-dom'
 import { BookOpen } from 'lucide-react'
 import { Card, CardBody } from '@/components/ui/Card'
@@ -20,25 +21,25 @@ export function SuperadminExercicesPage() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Exercices</h1>
+        <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Exercises</h1>
         <p className="text-sm text-slate-500 dark:text-slate-400">
-          {aujourdhui ? "Exercices lancés aujourd'hui." : 'Tous les exercices lancés sur la plateforme.'}
+          {aujourdhui ? "Exercises started today." : 'All exercises started on the platform.'}
         </p>
       </div>
 
       <div className="flex gap-2">
         <Button size="sm" variant={aujourdhui ? undefined : 'outline'} onClick={() => setParams({ periode: 'aujourdhui' })}>
-          Aujourd'hui
+          Today
         </Button>
         <Button size="sm" variant={aujourdhui ? 'outline' : undefined} onClick={() => setParams({})}>
-          Tous
+          All
         </Button>
       </div>
 
       {chargement && <FullPageSpinner />}
 
       {exercices && exercices.length === 0 && (
-        <EmptyState icon={<BookOpen className="h-8 w-8" />} titre="Aucun exercice pour cette période" />
+        <EmptyState icon={<BookOpen className="h-8 w-8" />} titre="No Exercises for This Period" />
       )}
 
       <div className="flex flex-col gap-3">

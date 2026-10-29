@@ -1,3 +1,4 @@
+
 import { useState } from 'react'
 import { UserCog, CheckCircle2, Ban } from 'lucide-react'
 import { Card, CardBody } from '@/components/ui/Card'
@@ -12,10 +13,10 @@ import { notify } from '@/lib/notify'
 import type { UtilisateurAdmin } from '@/types/compte'
 
 const LABEL_ROLE: Record<string, string> = {
-  ELEVE: 'Élève',
+  ELEVE: 'Student',
   PARENT: 'Parent',
-  ENSEIGNANT: 'Enseignant',
-  ADMIN_ETABLISSEMENT: "Admin d'établissement",
+  ENSEIGNANT: 'Teacher',
+  ADMIN_ETABLISSEMENT: 'Institution Administrator',
   SUPERADMIN: 'Superadmin',
 }
 
@@ -28,7 +29,7 @@ export function SuperadminComptesPage() {
     setActionEnCours(id)
     try {
       await superadminApi.validerCompte(id)
-      notify.succes('Compte validé.')
+      notify.succes('Account approved.')
       recharger()
     } catch (err) {
       notify.erreur(err)
@@ -42,7 +43,7 @@ export function SuperadminComptesPage() {
     setActionEnCours(compteASuspendre.id)
     try {
       await superadminApi.suspendreCompte(compteASuspendre.id)
-      notify.succes('Compte suspendu.')
+      notify.succes('Account suspended.')
       recharger()
     } catch (err) {
       notify.erreur(err)
@@ -54,16 +55,16 @@ export function SuperadminComptesPage() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Comptes en attente</h1>
+        <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Pending Accounts</h1>
         <p className="text-sm text-slate-500 dark:text-slate-400">
-          Valide les comptes Enseignant et Administrateur d'établissement avant qu'ils puissent se connecter.
+          Approve Teacher and Institution Administrator accounts before they can log in.
         </p>
       </div>
 
       {chargement && <FullPageSpinner />}
 
       {comptes && comptes.length === 0 && (
-        <EmptyState icon={<UserCog className="h-8 w-8" />} titre="Aucun compte en attente" />
+        <EmptyState icon={<UserCog className="h-8 w-8" />} titre="No Pending Accounts" />
       )}
 
       <div className="grid gap-3 sm:grid-cols-2">
@@ -83,7 +84,7 @@ export function SuperadminComptesPage() {
                   onClick={() => valider(c.id)}
                   className="gap-1"
                 >
-                  <CheckCircle2 className="h-3.5 w-3.5" /> Valider
+                  <CheckCircle2 className="h-3.5 w-3.5" /> Approve
                 </Button>
                 <Button
                   size="sm"
@@ -104,13 +105,13 @@ export function SuperadminComptesPage() {
         onFermer={() => setCompteASuspendre(null)}
         onConfirmer={confirmerSuspension}
         chargement={actionEnCours === compteASuspendre?.id}
-        titre="Suspendre ce compte ?"
+        titre="Suspend this account?"
         description={
           compteASuspendre
-            ? `${compteASuspendre.prenom} ${compteASuspendre.nom} (${compteASuspendre.email}) ne pourra plus se connecter tant que le compte n'est pas réactivé.`
+            ? `${compteASuspendre.prenom} ${compteASuspendre.nom} (${compteASuspendre.email}) will no longer be able to log in until the account is reactivated.`
             : ''
         }
-        libelleBouton="Suspendre"
+        libelleBouton="Suspend"
       />
     </div>
   )
