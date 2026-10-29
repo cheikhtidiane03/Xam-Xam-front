@@ -1,3 +1,4 @@
+
 import { useState, useRef, useEffect } from 'react'
 import { Menu, LogOut, ChevronDown, User as UserIcon } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
@@ -29,7 +30,7 @@ export function Topbar({ onOuvrirMenu }: { onOuvrirMenu: () => void }) {
       // meme si la revocation cote serveur echoue, on nettoie la session locale
     } finally {
       clearSession()
-      notify.info('À bientôt !')
+      notify.info('See you soon!')
       navigate('/connexion')
     }
   }
@@ -48,7 +49,7 @@ export function Topbar({ onOuvrirMenu }: { onOuvrirMenu: () => void }) {
       <div className="flex items-center gap-2">
         {!emailVerifie && (
           <span className="hidden rounded-full bg-amber-100 px-3 py-1 text-xs font-medium text-amber-800 dark:bg-amber-500/15 dark:text-amber-400 sm:inline-block">
-            Email non vérifié
+            Email not verified
           </span>
         )}
 
@@ -82,14 +83,14 @@ export function Topbar({ onOuvrirMenu }: { onOuvrirMenu: () => void }) {
                   className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-sm text-slate-600 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-white/5"
                   onClick={() => { setMenuOuvert(false); navigate(`${cheminEspaceRole(role)}/profil`) }}
                 >
-                  <UserIcon className="h-4 w-4" /> Mon profil
+                  <UserIcon className="h-4 w-4" /> My Profile
                 </button>
               )}
               <button
                 className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-sm text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-500/10"
                 onClick={seDeconnecter}
               >
-                <LogOut className="h-4 w-4" /> Se déconnecter
+                <LogOut className="h-4 w-4" /> Log Out
               </button>
             </div>
           )}
