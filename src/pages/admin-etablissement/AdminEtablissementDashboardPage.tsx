@@ -28,22 +28,22 @@ export function AdminEtablissementDashboardPage() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Vue d'ensemble</h1>
-        <p className="text-sm text-slate-500 dark:text-slate-400">L'activité de ton établissement en un coup d'œil.</p>
+        <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Overview</h1>
+        <p className="text-sm text-slate-500 dark:text-slate-400">Your institution's activity at a glance.</p>
       </div>
 
       {stats.donnees && (
         <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-          <StatCard icon={Users} label="Élèves" valeur={stats.donnees.nombreEleves} />
-          <StatCard icon={BookOpen} label="Exercices traités" valeur={stats.donnees.nombreExercicesTraites} />
+          <StatCard icon={Users} label="Students" valeur={stats.donnees.nombreEleves} />
+          <StatCard icon={BookOpen} label="Processed Exercises" valeur={stats.donnees.nombreExercicesTraites} />
           <StatCard
             icon={TrendingUp}
-            label="Taux de reformulation"
+            label="Reformulation Rate"
             valeur={`${Math.round(stats.donnees.tauxReformulationAtteinte)}%`}
           />
           <StatCard
             icon={Award}
-            label="Score moyen"
+            label="Average Score"
             valeur={`${Math.round(stats.donnees.scoreMoyenReformulation)}/100`}
           />
         </div>

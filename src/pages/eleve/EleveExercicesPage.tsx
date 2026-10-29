@@ -14,10 +14,10 @@ import type { StatutExercice } from '@/types/exercice'
 type Tone = 'neutral' | 'success' | 'warning' | 'danger' | 'brand'
 
 const STATUT_STYLE: Record<StatutExercice, { label: string; tone: Tone }> = {
-  EN_COURS: { label: 'En cours', tone: 'warning' },
-  REFORMULATION_EN_ATTENTE: { label: 'Reformulation à faire', tone: 'brand' },
-  TERMINE: { label: 'Terminé', tone: 'success' },
-  ABANDONNE: { label: 'Abandonné', tone: 'neutral' },
+  EN_COURS: { label: 'In Progress', tone: 'warning' },
+  REFORMULATION_EN_ATTENTE: { label: 'Explanation Required', tone: 'brand' },
+  TERMINE: { label: 'Completed', tone: 'success' },
+  ABANDONNE: { label: 'Abandoned', tone: 'neutral' },
 }
 
 export function EleveExercicesPage() {
@@ -28,11 +28,11 @@ export function EleveExercicesPage() {
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Mes exercices</h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400">Ton parcours guidé, exercice par exercice.</p>
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">My Exercises</h1>
+          <p className="text-sm text-slate-500 dark:text-slate-400">Your guided learning journey, one exercise at a time.</p>
         </div>
         <Button onClick={() => setModalOuverte(true)} className="gap-1.5">
-          <Plus className="h-4 w-4" /> Nouvel exercice
+          <Plus className="h-4 w-4" /> New Exercise
         </Button>
       </div>
 
@@ -42,11 +42,11 @@ export function EleveExercicesPage() {
       {exercices && exercices.length === 0 && (
         <EmptyState
           icon={<BookOpen className="h-8 w-8" />}
-          titre="Aucun exercice pour l'instant"
-          description="Crée ton premier exercice pour démarrer ton parcours guidé."
+          titre="No exercises yet"
+          description="Create your first exercise to start your guided learning journey."
           action={
             <Button size="sm" onClick={() => setModalOuverte(true)} className="gap-1.5">
-              <Plus className="h-4 w-4" /> Créer un exercice
+              <Plus className="h-4 w-4" /> Create an Exercise
             </Button>
           }
         />

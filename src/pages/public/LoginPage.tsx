@@ -1,3 +1,4 @@
+
 import { useState, type FormEvent } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { AuthLayout } from './AuthLayout'
@@ -26,7 +27,7 @@ export function LoginPage() {
     try {
       const auth = await authApi.login({ email, motDePasse })
       setSession(auth)
-      notify.succes(`Content de te revoir, ${auth.prenom} !`)
+      notify.succes(`Welcome back, ${auth.prenom}!`)
       const destination = (location.state as { from?: Location })?.from?.pathname ?? cheminEspaceRole(auth.role)
       navigate(destination, { replace: true })
     } catch (err) {
@@ -37,7 +38,7 @@ export function LoginPage() {
   }
 
   return (
-    <AuthLayout titre="Se connecter" sousTitre="Content de te revoir sur Xaam-Xaam+">
+    <AuthLayout titre="Log In" sousTitre="Welcome back to Xaam-Xaam+">
       <form onSubmit={onSubmit} className="flex flex-col gap-4">
         <Input
           label="Email"
@@ -48,7 +49,7 @@ export function LoginPage() {
           onChange={(e) => setEmail(e.target.value)}
         />
         <Input
-          label="Mot de passe"
+          label="Password"
           type="password"
           autoComplete="current-password"
           required
@@ -64,19 +65,19 @@ export function LoginPage() {
 
         <div className="flex items-center justify-end">
           <Link to="/mot-de-passe-oublie" className="text-xs font-medium text-brand-600 hover:underline dark:text-brand-400">
-            Mot de passe oublié ?
+            Forgot password?
           </Link>
         </div>
 
         <Button type="submit" loading={chargement} className="w-full">
-          Se connecter
+          Log In
         </Button>
       </form>
 
       <p className="mt-6 text-center text-sm text-slate-500 dark:text-slate-400">
-        Pas encore de compte ?{' '}
+        Don't have an account yet?{' '}
         <Link to="/inscription" className="font-medium text-brand-600 hover:underline dark:text-brand-400">
-          Inscris-toi
+          Sign Up
         </Link>
       </p>
     </AuthLayout>

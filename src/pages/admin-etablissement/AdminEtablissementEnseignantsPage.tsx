@@ -30,7 +30,7 @@ export function AdminEtablissementEnseignantsPage() {
     setEnvoiEnCours(true)
     try {
       await adminEtablissementApi.creerEnseignant({ nom, prenom, email, motDePasse, matiere })
-      notify.succes('Enseignant créé et activé !')
+      notify.succes('Teacher created and activated!')
       setNom(''); setPrenom(''); setEmail(''); setMotDePasse(''); setMatiere('')
       setModalOuverte(false)
       recharger()
@@ -45,7 +45,7 @@ export function AdminEtablissementEnseignantsPage() {
     try {
       if (actif) await adminEtablissementApi.desactiverEnseignant(id)
       else await adminEtablissementApi.reactiverEnseignant(id)
-      notify.succes(actif ? 'Enseignant désactivé.' : 'Enseignant réactivé.')
+      notify.succes(actif ? 'Teacher deactivated.' : 'Teacher reactivated.')
       recharger()
     } catch (err) {
       notify.erreur(err)
@@ -56,18 +56,18 @@ export function AdminEtablissementEnseignantsPage() {
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Enseignants</h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400">Gère les comptes enseignants de ton établissement.</p>
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Teachers</h1>
+          <p className="text-sm text-slate-500 dark:text-slate-400">Manage your institution's teacher accounts.</p>
         </div>
         <Button onClick={() => setModalOuverte(true)} className="gap-1.5">
-          <Plus className="h-4 w-4" /> Créer un enseignant
+          <Plus className="h-4 w-4" /> Create a teacher
         </Button>
       </div>
 
       {chargement && <FullPageSpinner />}
 
       {enseignants && enseignants.length === 0 && (
-        <EmptyState icon={<Users className="h-8 w-8" />} titre="Aucun enseignant pour l'instant" />
+        <EmptyState icon={<Users className="h-8 w-8" />} titre="No teachers yet" />
       )}
 
       <div className="grid gap-3 sm:grid-cols-2">
@@ -79,37 +79,37 @@ export function AdminEtablissementEnseignantsPage() {
                 <p className="text-xs text-slate-500 dark:text-slate-400">{ens.email}</p>
                 <div className="mt-1.5 flex items-center gap-1.5">
                   <Badge tone="brand">{ens.matiere}</Badge>
-                  <Badge tone={ens.actif ? 'success' : 'danger'}>{ens.actif ? 'Actif' : 'Inactif'}</Badge>
+                  <Badge tone={ens.actif ? 'success' : 'danger'}>{ens.actif ? 'Active' : 'Inactive'}</Badge>
                 </div>
               </div>
               <Button size="sm" variant="outline" onClick={() => basculerActivation(ens.id, ens.actif)}>
-                {ens.actif ? 'Désactiver' : 'Réactiver'}
+                {ens.actif ? 'Deactivate' : 'Reactivate'}
               </Button>
             </CardBody>
           </Card>
         ))}
       </div>
 
-      <Modal ouvert={modalOuverte} onFermer={() => setModalOuverte(false)} titre="Créer un compte enseignant">
+      <Modal ouvert={modalOuverte} onFermer={() => setModalOuverte(false)} titre="Create a teacher account">
         <form onSubmit={onSubmit} className="flex flex-col gap-4">
           <div className="grid grid-cols-2 gap-3">
-            <Input label="Prénom" required value={prenom} onChange={(e) => setPrenom(e.target.value)} />
-            <Input label="Nom" required value={nom} onChange={(e) => setNom(e.target.value)} />
+            <Input label="First name" required value={prenom} onChange={(e) => setPrenom(e.target.value)} />
+            <Input label="Last name" required value={nom} onChange={(e) => setNom(e.target.value)} />
           </div>
           <Input label="Email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
           <Input
-            label="Mot de passe"
+            label="Password"
             type="password"
             required
             minLength={8}
-            hint="8 caractères minimum"
+            hint="Minimum 8 characters"
             value={motDePasse}
             onChange={(e) => setMotDePasse(e.target.value)}
           />
-          <Input label="Matière" required value={matiere} onChange={(e) => setMatiere(e.target.value)} />
+          <Input label="Subject" required value={matiere} onChange={(e) => setMatiere(e.target.value)} />
           <div className="flex justify-end gap-2 pt-2">
-            <Button type="button" variant="outline" onClick={() => setModalOuverte(false)}>Annuler</Button>
-            <Button type="submit" loading={envoiEnCours}>Créer</Button>
+            <Button type="button" variant="outline" onClick={() => setModalOuverte(false)}>Cancel</Button>
+            <Button type="submit" loading={envoiEnCours}>Create</Button>
           </div>
         </form>
       </Modal>

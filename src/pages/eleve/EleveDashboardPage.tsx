@@ -47,15 +47,15 @@ export function EleveDashboardPage() {
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
-            Salut {prenom} 👋
+            Hi {prenom} 👋
           </h1>
           <p className="text-sm text-slate-500 dark:text-slate-400">
-            Voici où tu en es dans ton parcours.
+            Here's how you're progressing on your learning journey.
           </p>
         </div>
         <Link to="/eleve/exercices">
           <Button className="gap-1.5">
-            <Plus className="h-4 w-4" /> Nouvel exercice
+            <Plus className="h-4 w-4" /> New Exercise
           </Button>
         </Link>
       </div>
@@ -68,33 +68,33 @@ export function EleveDashboardPage() {
 
       {suivi.donnees && (
         <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-          <StatCard icon={BookOpen} label="Exercices terminés" valeur={suivi.donnees.nombreExercicesTermines} />
-          <StatCard icon={Target} label="En cours" valeur={suivi.donnees.nombreExercicesEnCours} />
+          <StatCard icon={BookOpen} label="Completed Exercises" valeur={suivi.donnees.nombreExercicesTermines} />
+          <StatCard icon={Target} label="In Progress" valeur={suivi.donnees.nombreExercicesEnCours} />
           <StatCard
             icon={Zap}
-            label="Score moyen"
+            label="Average Score"
             valeur={`${Math.round(suivi.donnees.scoreMoyenReformulation)}/100`}
           />
           <StatCard
             icon={Clock}
-            label="Temps de réflexion moyen"
+            label="Average Thinking Time"
             valeur={`${Math.round(suivi.donnees.tempsReflexionMoyenMinutes)} min`}
           />
         </div>
       )}
 
       <div className="grid gap-6 lg:grid-cols-3">
-        {/* Progression par matiere */}
+        {/* Progress by subject */}
         <Card className="lg:col-span-2">
           <CardBody>
-            <h2 className="font-semibold text-slate-900 dark:text-slate-100">Progression par matière</h2>
+            <h2 className="font-semibold text-slate-900 dark:text-slate-100">Progress by Subject</h2>
 
-            {progression.chargement && <p className="mt-3 text-sm text-slate-400">Chargement...</p>}
+            {progression.chargement && <p className="mt-3 text-sm text-slate-400">Loading...</p>}
 
             {progression.donnees && progression.donnees.length === 0 && (
               <EmptyState
-                titre="Pas encore de matière suivie"
-                description="Crée ton premier exercice pour voir ta progression apparaître ici."
+                titre="No subjects tracked yet"
+                description="Create your first exercise to see your progress here."
                 className="mt-3"
               />
             )}
@@ -105,7 +105,7 @@ export function EleveDashboardPage() {
                   <div className="flex items-center justify-between text-sm">
                     <span className="font-medium text-slate-700 dark:text-slate-300">{p.matiere}</span>
                     <span className="text-slate-500 dark:text-slate-400">
-                      {p.nombreExercicesTermines} terminé(s) · {Math.round(p.scoreMoyenReformulation)}/100
+                      {p.nombreExercicesTermines} completed · {Math.round(p.scoreMoyenReformulation)}/100
                     </span>
                   </div>
                   <ProgressBar valeur={p.scoreMoyenReformulation} className="mt-1.5" />
@@ -115,29 +115,29 @@ export function EleveDashboardPage() {
           </CardBody>
         </Card>
 
-        {/* Quota + badges recap */}
+        {/* AI quota + badges recap */}
         <div className="flex flex-col gap-6">
           <Card>
             <CardBody>
-              <h2 className="font-semibold text-slate-900 dark:text-slate-100">Quota IA du jour</h2>
+              <h2 className="font-semibold text-slate-900 dark:text-slate-100">Daily AI Quota</h2>
               <p className="mt-3 text-3xl font-bold text-brand-600 dark:text-brand-400">
                 {quota.donnees ?? '—'}
               </p>
-              <p className="text-xs text-slate-500 dark:text-slate-400">requêtes restantes aujourd'hui</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">requests remaining today</p>
             </CardBody>
           </Card>
 
           <Card>
             <CardBody>
               <div className="flex items-center justify-between">
-                <h2 className="font-semibold text-slate-900 dark:text-slate-100">Mes badges</h2>
+                <h2 className="font-semibold text-slate-900 dark:text-slate-100">My Badges</h2>
                 <Link to="/eleve/badges" className="text-xs font-medium text-brand-600 hover:underline dark:text-brand-400">
-                  Voir tout
+                  View All
                 </Link>
               </div>
               {badges.donnees && badges.donnees.length === 0 ? (
                 <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-                  Aucun badge pour l'instant — termine ton premier exercice !
+                  No badges yet — complete your first exercise!
                 </p>
               ) : (
                 <div className="mt-3 flex flex-wrap gap-2">

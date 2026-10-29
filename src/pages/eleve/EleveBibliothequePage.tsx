@@ -25,7 +25,7 @@ export function EleveBibliothequePage() {
     setDemarrageEnCours(id)
     try {
       const exercice = await eleveApi.creerExerciceDepuisBibliotheque(id)
-      notify.succes('Exercice créé depuis le modèle !')
+      notify.succes('Exercise created from template!')
       navigate(`/eleve/exercices/${exercice.id}`)
     } catch (err) {
       notify.erreur(err)
@@ -37,15 +37,15 @@ export function EleveBibliothequePage() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Bibliothèque d'exercices</h1>
+        <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Exercise Library</h1>
         <p className="text-sm text-slate-500 dark:text-slate-400">
-          Des exercices types proposés par tes enseignants, prêts à démarrer.
+          Sample exercises provided by your teachers, ready to get started.
         </p>
       </div>
 
       <div className="grid grid-cols-2 gap-3 sm:max-w-sm">
-        <Input placeholder="Matière" value={matiere} onChange={(e) => setMatiere(e.target.value)} />
-        <Input placeholder="Niveau" value={niveau} onChange={(e) => setNiveau(e.target.value)} />
+        <Input placeholder="Subject" value={matiere} onChange={(e) => setMatiere(e.target.value)} />
+        <Input placeholder="Level" value={niveau} onChange={(e) => setNiveau(e.target.value)} />
       </div>
 
       {chargement && <FullPageSpinner />}
@@ -53,8 +53,8 @@ export function EleveBibliothequePage() {
       {exercices && exercices.length === 0 && (
         <EmptyState
           icon={<Library className="h-8 w-8" />}
-          titre="Aucun exercice type trouvé"
-          description="Essaie d'élargir ta recherche ou reviens plus tard."
+          titre="No sample exercises found"
+          description="Try broadening your search or come back later."
         />
       )}
 
@@ -75,7 +75,7 @@ export function EleveBibliothequePage() {
                 loading={demarrageEnCours === ex.id}
                 onClick={() => demarrerDepuisModele(ex.id)}
               >
-                Démarrer <ArrowRight className="h-3.5 w-3.5" />
+                Start <ArrowRight className="h-3.5 w-3.5" />
               </Button>
             </CardBody>
           </Card>

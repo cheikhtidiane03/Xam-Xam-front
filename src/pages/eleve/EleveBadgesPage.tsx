@@ -11,9 +11,9 @@ export function EleveBadgesPage() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Mes badges</h1>
+        <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">My Badges</h1>
         <p className="text-sm text-slate-500 dark:text-slate-400">
-          Récompenses obtenues au fil de ta progression.
+          Rewards earned as you progress.
         </p>
       </div>
 
@@ -22,8 +22,8 @@ export function EleveBadgesPage() {
       {badges && badges.length === 0 && (
         <EmptyState
           icon={<Award className="h-8 w-8" />}
-          titre="Aucun badge pour l'instant"
-          description="Termine des exercices et soigne tes reformulations pour débloquer tes premiers badges."
+          titre="No badges yet"
+          description="Complete exercises and improve your reformulations to unlock your first badges."
         />
       )}
 
@@ -38,7 +38,7 @@ export function EleveBadgesPage() {
                 <p className="font-semibold text-slate-900 dark:text-slate-100">{b.nom}</p>
                 <p className="mt-0.5 text-sm text-slate-500 dark:text-slate-400">{b.description}</p>
                 <p className="mt-1.5 text-xs text-slate-400 dark:text-slate-500">
-                  Obtenu le {new Date(b.dateObtention).toLocaleDateString('fr-FR')}
+                  Earned on {new Date(b.dateObtention).toLocaleDateString('en-GB')}
                 </p>
               </div>
             </CardBody>

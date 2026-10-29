@@ -36,7 +36,7 @@ export function EleveExerciceDetailPage() {
 
   if (chargement) return <FullPageSpinner />
   if (erreur || !exercice) {
-    return <p className="text-sm text-red-600 dark:text-red-400">{erreur ?? 'Exercice introuvable.'}</p>
+    return <p className="text-sm text-red-600 dark:text-red-400">{erreur ?? 'Exercise not found.'}</p>
   }
 
   async function onSoumettreTentative(e: FormEvent) {
@@ -74,7 +74,7 @@ export function EleveExerciceDetailPage() {
     try {
       const res = await eleveApi.soumettreReformulation(exerciceId!, { texte: texteReformulation })
       setResultat(res)
-      notify.succes('Reformulation évaluée !')
+      notify.succes('Reformulation evaluated!')
     } catch (err) {
       notify.erreur(err)
     } finally {
@@ -85,7 +85,7 @@ export function EleveExerciceDetailPage() {
   return (
     <div className="flex flex-col gap-6">
       <Link to="/eleve/exercices" className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200">
-        <ArrowLeft className="h-4 w-4" /> Retour aux exercices
+        <ArrowLeft className="h-4 w-4" /> Back to Exercises
       </Link>
 
       <Card>
@@ -103,11 +103,11 @@ export function EleveExerciceDetailPage() {
           <CardBody className="flex flex-col items-center gap-3 py-8 text-center">
             <CheckCircle2 className="h-10 w-10 text-emerald-500" />
             <p className="text-xl font-bold text-slate-900 dark:text-slate-100">
-              Score : {resultat.score}/100
+              Score: {resultat.score}/100
             </p>
             <p className="max-w-md text-sm text-slate-600 dark:text-slate-300">{resultat.feedbackIa}</p>
             <Link to="/eleve/exercices">
-              <Button variant="outline" className="mt-2">Retour à mes exercices</Button>
+              <Button variant="outline" className="mt-2">Back to My Exercises</Button>
             </Link>
           </CardBody>
         </Card>
@@ -118,13 +118,13 @@ export function EleveExerciceDetailPage() {
             <CardBody>
               <div className="flex items-center gap-2">
                 <MessageCircleQuestion className="h-4.5 w-4.5 text-brand-500" />
-                <h2 className="font-semibold text-slate-900 dark:text-slate-100">Ton parcours guidé</h2>
+                <h2 className="font-semibold text-slate-900 dark:text-slate-100">Your Guided Learning Journey</h2>
               </div>
 
               <div className="mt-4 flex flex-col gap-3">
                 {echanges.length === 0 && (
                   <p className="text-sm text-slate-500 dark:text-slate-400">
-                    Écris ta première tentative ci-dessous — l'IA va te poser une question pour t'aider à avancer.
+                    Write your first attempt below — the AI will ask you a question to help you make progress.
                   </p>
                 )}
                 {echanges.map((e, i) => (
@@ -145,7 +145,7 @@ export function EleveExerciceDetailPage() {
                 <input
                   value={contenuTentative}
                   onChange={(e) => setContenuTentative(e.target.value)}
-                  placeholder="Écris ta tentative ou ta réponse à la question de l'IA..."
+                  placeholder="Write your attempt or answer the AI's question..."
                   className="h-10 flex-1 rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-brand-500 dark:border-white/10 dark:bg-white/5 dark:text-slate-100"
                 />
                 <Button type="submit" loading={envoiEnCours} disabled={!contenuTentative.trim()}>
@@ -161,7 +161,7 @@ export function EleveExerciceDetailPage() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Lightbulb className="h-4.5 w-4.5 text-amber-500" />
-                  <h2 className="font-semibold text-slate-900 dark:text-slate-100">Indices</h2>
+                  <h2 className="font-semibold text-slate-900 dark:text-slate-100">Hints</h2>
                 </div>
                 <Button
                   size="sm"
@@ -170,13 +170,13 @@ export function EleveExerciceDetailPage() {
                   disabled={indices.length >= 3}
                   onClick={onDebloquerIndice}
                 >
-                  {indices.length >= 3 ? 'Tous débloqués' : `Débloquer l'indice ${indices.length + 1}`}
+                  {indices.length >= 3 ? 'All Unlocked' : `Unlock Hint ${indices.length + 1}`}
                 </Button>
               </div>
 
               {indices.length === 0 ? (
                 <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-                  Bloqué ? Débloque un indice progressif (3 niveaux disponibles).
+                  Stuck? Unlock a progressive hint (3 levels available).
                 </p>
               ) : (
                 <div className="mt-3 flex flex-col gap-2">
@@ -185,7 +185,7 @@ export function EleveExerciceDetailPage() {
                       key={ind.id}
                       className="rounded-lg bg-amber-50 px-3 py-2 text-sm text-amber-900 dark:bg-amber-500/10 dark:text-amber-300"
                     >
-                      <span className="font-medium">Indice {ind.niveau} :</span> {ind.contenu}
+                      <span className="font-medium">Hint {ind.niveau}:</span> {ind.contenu}
                     </div>
                   ))}
                 </div>
@@ -197,15 +197,15 @@ export function EleveExerciceDetailPage() {
           <Card>
             <CardBody>
               <h2 className="font-semibold text-slate-900 dark:text-slate-100">
-                Étape finale : explique ta démarche
+                Final Step: Explain Your Approach
               </h2>
               <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-                Avec tes propres mots, explique comment tu as résolu (ou essayé de résoudre) cet exercice.
+                In your own words, explain how you solved (or tried to solve) this exercise.
               </p>
 
               {!modeReformulation ? (
                 <Button variant="secondary" className="mt-3" onClick={() => setModeReformulation(true)}>
-                  Je suis prêt à reformuler
+                  I'm Ready to Explain
                 </Button>
               ) : (
                 <form onSubmit={onSoumettreReformulation} className="mt-3 flex flex-col gap-3">
@@ -214,11 +214,11 @@ export function EleveExerciceDetailPage() {
                     rows={4}
                     value={texteReformulation}
                     onChange={(e) => setTexteReformulation(e.target.value)}
-                    placeholder="Explique ta démarche avec tes propres mots..."
+                    placeholder="Explain your approach in your own words..."
                     className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-brand-500 dark:border-white/10 dark:bg-white/5 dark:text-slate-100"
                   />
                   <Button type="submit" loading={envoiReformulation} className="self-start">
-                    Soumettre ma reformulation
+                    Submit My Explanation
                   </Button>
                 </form>
               )}

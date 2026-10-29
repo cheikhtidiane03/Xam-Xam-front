@@ -1,3 +1,4 @@
+
 import { useState, useEffect, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthLayout } from './AuthLayout'
@@ -14,16 +15,16 @@ import type { Role } from '@/types/auth'
 import type { EtablissementPublicResponse } from '@/types/etablissement'
 
 const ROLES_PUBLICS: { value: Role; label: string }[] = [
-  { value: 'ELEVE', label: 'Élève / Étudiant' },
+  { value: 'ELEVE', label: 'Pupil / Student' },
   { value: 'PARENT', label: 'Parent' },
-  { value: 'ENSEIGNANT', label: 'Enseignant' },
-  { value: 'ADMIN_ETABLISSEMENT', label: "Administrateur d'établissement" },
+  { value: 'ENSEIGNANT', label: 'Teacher' },
+  { value: 'ADMIN_ETABLISSEMENT', label: 'Institution Administrator' },
 ]
 
 const NIVEAUX_SCOLAIRES = [
-  { groupe: 'Collège', options: ['SIXIEME', 'CINQUIEME', 'QUATRIEME', 'TROISIEME'] },
-  { groupe: 'Lycée', options: ['SECONDE', 'PREMIERE', 'TERMINALE'] },
-  { groupe: 'Supérieur', options: ['LICENCE_1', 'LICENCE_2', 'LICENCE_3', 'MASTER_1', 'MASTER_2', 'DOCTORAT'] },
+  { groupe: 'Middle School', options: ['SIXIEME', 'CINQUIEME', 'QUATRIEME', 'TROISIEME'] },
+  { groupe: 'High School', options: ['SECONDE', 'PREMIERE', 'TERMINALE'] },
+  { groupe: 'Higher Education', options: ['LICENCE_1', 'LICENCE_2', 'LICENCE_3', 'MASTER_1', 'MASTER_2', 'DOCTORAT'] },
 ]
 
 // Roles pour lesquels un etablissement doit obligatoirement etre choisi.
@@ -70,7 +71,7 @@ export function RegisterPage() {
     setErreur(null)
 
     if (etablissementRequis && !etablissementId) {
-      setErreur("Choisis l'établissement auquel ce compte est rattaché.")
+      setErreur('Please select the institution this account belongs to.')
       return
     }
 
@@ -89,10 +90,10 @@ export function RegisterPage() {
 
       if (role === 'ELEVE' || role === 'PARENT') {
         setSession(auth)
-        notify.succes('Compte créé ! Bienvenue sur Xaam-Xaam+.')
+        notify.succes('Account created! Welcome to Xaam-Xaam+.')
         navigate(cheminEspaceRole(auth.role), { replace: true })
       } else {
-        notify.succes('Compte créé. Un superadmin doit valider ton compte avant que tu puisses te connecter.')
+        notify.succes('Account created. A superadmin must approve your account before you can log in.')
         navigate('/connexion', { replace: true })
       }
     } catch (err) {
@@ -103,17 +104,17 @@ export function RegisterPage() {
   }
 
   return (
-    <AuthLayout titre="Créer un compte" sousTitre="Rejoins Xaam-Xaam+ en quelques secondes">
+    <AuthLayout titre="Create an Account" sousTitre="Join Xaam-Xaam+ in just a few seconds">
       <form onSubmit={onSubmit} className="flex flex-col gap-4">
-        <Select label="Je suis..." value={role} onChange={(e) => setRole(e.target.value as Role)}>
+        <Select label="I am a..." value={role} onChange={(e) => setRole(e.target.value as Role)}>
           {ROLES_PUBLICS.map((r) => (
             <option key={r.value} value={r.value}>{r.label}</option>
           ))}
         </Select>
 
         <div className="grid grid-cols-2 gap-3">
-          <Input label="Prénom" required value={prenom} onChange={(e) => setPrenom(e.target.value)} />
-          <Input label="Nom" required value={nom} onChange={(e) => setNom(e.target.value)} />
+          <Input label="First Name" required value={prenom} onChange={(e) => setPrenom(e.target.value)} />
+          <Input label="Last Name" required value={nom} onChange={(e) => setNom(e.target.value)} />
         </div>
 
         <Input
@@ -126,19 +127,19 @@ export function RegisterPage() {
         />
 
         <Input
-          label="Mot de passe"
+          label="Password"
           type="password"
           autoComplete="new-password"
           required
           minLength={8}
-          hint="8 caractères minimum"
+          hint="Minimum 8 characters"
           value={motDePasse}
           onChange={(e) => setMotDePasse(e.target.value)}
         />
 
         {role === 'ELEVE' && (
           <Select
-            label="Niveau scolaire"
+            label="Education Level"
             value={niveauScolaire}
             onChange={(e) => setNiveauScolaire(e.target.value)}
           >
@@ -154,9 +155,9 @@ export function RegisterPage() {
 
         {role === 'ENSEIGNANT' && (
           <Input
-            label="Matière enseignée"
+            label="Subject Taught"
             required
-            placeholder="Ex : Mathématiques"
+            placeholder="e.g. Mathematics"
             value={matiere}
             onChange={(e) => setMatiere(e.target.value)}
           />
@@ -164,13 +165,13 @@ export function RegisterPage() {
 
         {etablissementVisible && (
           <Select
-            label={etablissementRequis ? 'Établissement' : 'Établissement (optionnel)'}
+            label={etablissementRequis ? 'Institution' : 'Institution (optional)'}
             required={etablissementRequis}
             value={etablissementId}
             onChange={(e) => setEtablissementId(e.target.value)}
           >
             <option value="">
-              {etablissements.length === 0 ? 'Aucun établissement disponible' : 'Sélectionner...'}
+              {etablissements.length === 0 ? 'No institutions available' : 'Select...'}
             </option>
             {etablissements.map((etab) => (
               <option key={etab.id} value={etab.id}>{etab.nom}</option>
@@ -180,14 +181,14 @@ export function RegisterPage() {
 
         {etablissementRequis && etablissements.length === 0 && (
           <p className="rounded-lg bg-amber-50 px-3 py-2 text-xs text-amber-800 dark:bg-amber-500/10 dark:text-amber-400">
-            Aucun établissement n'est encore disponible. Contacte un administrateur Xaam-Xaam+ pour qu'il en crée un
-            avant de pouvoir créer ce type de compte.
+            No institutions are available yet. Contact a Xaam-Xaam+ administrator to create one
+            before you can create this type of account.
           </p>
         )}
 
         {(role === 'ENSEIGNANT' || role === 'ADMIN_ETABLISSEMENT') && (
           <p className="rounded-lg bg-amber-50 px-3 py-2 text-xs text-amber-800 dark:bg-amber-500/10 dark:text-amber-400">
-            Ce type de compte doit être validé par un administrateur Xaam-Xaam+ avant de pouvoir se connecter.
+            This type of account must be approved by a Xaam-Xaam+ administrator before you can log in.
           </p>
         )}
 
@@ -198,14 +199,14 @@ export function RegisterPage() {
         )}
 
         <Button type="submit" loading={chargement} className="w-full">
-          Créer mon compte
+          Create My Account
         </Button>
       </form>
 
       <p className="mt-6 text-center text-sm text-slate-500 dark:text-slate-400">
-        Déjà un compte ?{' '}
+        Already have an account?{' '}
         <Link to="/connexion" className="font-medium text-brand-600 hover:underline dark:text-brand-400">
-          Connecte-toi
+          Log In
         </Link>
       </p>
     </AuthLayout>
